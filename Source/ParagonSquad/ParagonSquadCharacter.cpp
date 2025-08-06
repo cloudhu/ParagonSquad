@@ -1,17 +1,21 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "ParagonSquadCharacter.h"
-#include "UObject/ConstructorHelpers.h"
-#include "Camera/CameraComponent.h"
-#include "Components/DecalComponent.h"
-#include "Components/CapsuleComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/PlayerController.h"
-#include "GameFramework/SpringArmComponent.h"
-#include "Materials/Material.h"
-#include "Engine/World.h"
 
-AParagonSquadCharacter::AParagonSquadCharacter()
+#include "NinjaCombatTags.h"
+
+#include "Camera/CameraComponent.h"
+
+#include "Components/ArrowComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/NinjaCombatCharacterMovementComponent.h"
+#include "Components/NinjaCombatManagerComponent.h"
+
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+
+AParagonSquadCharacter::AParagonSquadCharacter(const FObjectInitializer& ObjectInitializer): Super(
+	ObjectInitializer.SetDefaultSubobjectClass<UNinjaCombatCharacterMovementComponent>(CharacterMovementComponentName))
 {
 	// Set size for player capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -21,11 +25,11 @@ AParagonSquadCharacter::AParagonSquadCharacter()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
-	// Configure character movement
-	GetCharacterMovement()->bOrientRotationToMovement = true; // Rotate character to moving direction
-	GetCharacterMovement()->RotationRate = FRotator(0.f, 640.f, 0.f);
-	GetCharacterMovement()->bConstrainToPlane = true;
-	GetCharacterMovement()->bSnapToPlaneAtStart = true;
+	// Configure character movement -> use UNinjaCombatCharacterMovementComponent instead
+	// GetCharacterMovement()->bOrientRotationToMovement = true; // Rotate character to moving direction
+	// GetCharacterMovement()->RotationRate = FRotator(0.f, 640.f, 0.f);
+	// GetCharacterMovement()->bConstrainToPlane = true;
+	// GetCharacterMovement()->bSnapToPlaneAtStart = true;
 
 	// Create a camera boom...
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -43,9 +47,44 @@ AParagonSquadCharacter::AParagonSquadCharacter()
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
+
+	CombatManager = CreateDefaultSubobject<UNinjaCombatManagerComponent>("CombatManager");
+
+	ForwardReference = CreateDefaultSubobject<UArrowComponent>("ForwardReference");
+	ForwardReference->ComponentTags.Add(Tag_Combat_Component_ForwardReference.GetTag().GetTagName());
+	ForwardReference->SetVisibleFlag(false);
+	ForwardReference->SetUsingAbsoluteRotation(true);
+	ForwardReference->SetWorldRotation(FRotator::ZeroRotator);
+	ForwardReference->SetArrowColor(FLinearColor::Green);
+	ForwardReference->SetupAttachment(GetRootComponent());
 }
 
 void AParagonSquadCharacter::Tick(float DeltaSeconds)
 {
-    Super::Tick(DeltaSeconds);
+	Super::Tick(DeltaSeconds);
+}
+
+UNinjaCombatManagerComponent* AParagonSquadCharacter::GetCombatManager_Implementation() const
+{
+	return CombatManager;
+}
+
+USceneComponent* AParagonSquadCharacter::GetCombatForwardReference_Implementation() const
+{
+	return ForwardReference;
+}
+
+USkeletalMeshComponent* AParagonSquadCharacter::GetCombatMesh_Implementation() const
+{
+	return GetMesh();
+}
+
+UAnimInstance* AParagonSquadCharacter::GetCombatAnimInstance_Implementation() const
+{
+	return GetMesh()->GetAnimInstance();
+}
+
+TArray<UNinjaInputSetupDataAsset*> AParagonSquadCharacter::GetInputSetups_Implementation() const
+{
+	return CharacterInputs;
 }

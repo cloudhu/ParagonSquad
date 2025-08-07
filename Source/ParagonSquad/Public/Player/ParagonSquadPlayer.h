@@ -7,22 +7,25 @@
 #include "GameFramework/NinjaGASPlayerCharacter.h"
 
 #include "Interfaces/CombatSystemInterface.h"
+#include "Interfaces/EquipmentSystemInterface.h"
 #include "Interfaces/InputSetupProviderInterface.h"
 
-#include "ParagonSquadCharacter.generated.h"
+#include "ParagonSquadPlayer.generated.h"
 
+class UNinjaEquipmentManagerComponent;
 class USpringArmComponent;
 class UCameraComponent;
 class UNinjaCombatManagerComponent;
-class NinjaInputSetupDataAsset;
+class UNinjaInputSetupDataAsset;
+
 
 UCLASS(Blueprintable)
-class AParagonSquadCharacter : public ANinjaGASPlayerCharacter, public ICombatSystemInterface, public IInputSetupProviderInterface
+class AParagonSquadPlayer : public ANinjaGASPlayerCharacter, public ICombatSystemInterface, public IInputSetupProviderInterface, public IEquipmentSystemInterface
 {
 	GENERATED_BODY()
 
 public:
-	AParagonSquadCharacter(const FObjectInitializer& ObjectInitializer);
+	AParagonSquadPlayer(const FObjectInitializer& ObjectInitializer);
 
 	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;
@@ -43,6 +46,9 @@ public:
 	virtual TArray<UNinjaInputSetupDataAsset*> GetInputSetups_Implementation() const override;
 	// -- End Input Setup Provider implementation
 
+	// -- Begin EquipmentSystem implementation
+	virtual UNinjaEquipmentManagerComponent* GetEquipmentManager_Implementation() const override;
+	// -- End EquipmentSystem implementation
 protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input Setup")
@@ -64,4 +70,8 @@ private:
 	/** Forward Reference (Input and Combat integration). */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UArrowComponent> ForwardReference;
+
+	/** Equipment Manager component. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UNinjaEquipmentManagerComponent> EquipmentManager;
 };

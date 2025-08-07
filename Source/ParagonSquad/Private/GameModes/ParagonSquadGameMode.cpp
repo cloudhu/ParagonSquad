@@ -1,8 +1,8 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "ParagonSquadGameMode.h"
-#include "ParagonSquadPlayerController.h"
-#include "ParagonSquadCharacter.h"
+#include "GameModes/ParagonSquadGameMode.h"
+#include "Player/ParagonSquadPlayerController.h"
+#include "Player/ParagonSquadPlayer.h"
 #include "UObject/ConstructorHelpers.h"
 
 AParagonSquadGameMode::AParagonSquadGameMode()

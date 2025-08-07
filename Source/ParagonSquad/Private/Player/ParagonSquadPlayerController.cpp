@@ -1,6 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "ParagonSquadPlayerController.h"
+#include "Player/ParagonSquadPlayerController.h"
 #include "Components/NinjaInputManagerComponent.h"
 
 AParagonSquadPlayerController::AParagonSquadPlayerController(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)

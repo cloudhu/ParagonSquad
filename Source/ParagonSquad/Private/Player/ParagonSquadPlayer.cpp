@@ -1,6 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "ParagonSquadCharacter.h"
+#include "Player/ParagonSquadPlayer.h"
 
 #include "NinjaCombatTags.h"
 
@@ -10,11 +10,12 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/NinjaCombatCharacterMovementComponent.h"
 #include "Components/NinjaCombatManagerComponent.h"
+#include "Components/NinjaEquipmentManagerComponent.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
-AParagonSquadCharacter::AParagonSquadCharacter(const FObjectInitializer& ObjectInitializer): Super(
+AParagonSquadPlayer::AParagonSquadPlayer(const FObjectInitializer& ObjectInitializer): Super(
 	ObjectInitializer.SetDefaultSubobjectClass<UNinjaCombatCharacterMovementComponent>(CharacterMovementComponentName))
 {
 	// Set size for player capsule
@@ -57,34 +58,42 @@ AParagonSquadCharacter::AParagonSquadCharacter(const FObjectInitializer& ObjectI
 	ForwardReference->SetWorldRotation(FRotator::ZeroRotator);
 	ForwardReference->SetArrowColor(FLinearColor::Green);
 	ForwardReference->SetupAttachment(GetRootComponent());
+
+	/** Equipment Manager component. */
+	EquipmentManager = CreateDefaultSubobject<UNinjaEquipmentManagerComponent>(TEXT("EquipmentManager"));
 }
 
-void AParagonSquadCharacter::Tick(float DeltaSeconds)
+void AParagonSquadPlayer::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 }
 
-UNinjaCombatManagerComponent* AParagonSquadCharacter::GetCombatManager_Implementation() const
+UNinjaCombatManagerComponent* AParagonSquadPlayer::GetCombatManager_Implementation() const
 {
 	return CombatManager;
 }
 
-USceneComponent* AParagonSquadCharacter::GetCombatForwardReference_Implementation() const
+USceneComponent* AParagonSquadPlayer::GetCombatForwardReference_Implementation() const
 {
 	return ForwardReference;
 }
 
-USkeletalMeshComponent* AParagonSquadCharacter::GetCombatMesh_Implementation() const
+USkeletalMeshComponent* AParagonSquadPlayer::GetCombatMesh_Implementation() const
 {
 	return GetMesh();
 }
 
-UAnimInstance* AParagonSquadCharacter::GetCombatAnimInstance_Implementation() const
+UAnimInstance* AParagonSquadPlayer::GetCombatAnimInstance_Implementation() const
 {
 	return GetMesh()->GetAnimInstance();
 }
 
-TArray<UNinjaInputSetupDataAsset*> AParagonSquadCharacter::GetInputSetups_Implementation() const
+TArray<UNinjaInputSetupDataAsset*> AParagonSquadPlayer::GetInputSetups_Implementation() const
 {
 	return CharacterInputs;
+}
+
+UNinjaEquipmentManagerComponent* AParagonSquadPlayer::GetEquipmentManager_Implementation() const
+{
+	return EquipmentManager;
 }

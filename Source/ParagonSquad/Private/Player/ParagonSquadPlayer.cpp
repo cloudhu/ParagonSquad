@@ -15,6 +15,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
+// #include "NinjaCombatInventory/Public/Components/NinjaCombatEquipmentAdapterComponent.h"
+
 AParagonSquadPlayer::AParagonSquadPlayer(const FObjectInitializer& ObjectInitializer): Super(
 	ObjectInitializer.SetDefaultSubobjectClass<UNinjaCombatCharacterMovementComponent>(CharacterMovementComponentName))
 {
@@ -61,6 +63,7 @@ AParagonSquadPlayer::AParagonSquadPlayer(const FObjectInitializer& ObjectInitial
 
 	/** Equipment Manager component. */
 	EquipmentManager = CreateDefaultSubobject<UNinjaEquipmentManagerComponent>(TEXT("EquipmentManager"));
+	// EquipmentWeaponManager=CreateDefaultSubobject<UNinjaCombatEquipmentAdapterComponent>(TEXT("EquipmentWeaponManager"));
 }
 
 void AParagonSquadPlayer::Tick(float DeltaSeconds)
@@ -87,6 +90,12 @@ UAnimInstance* AParagonSquadPlayer::GetCombatAnimInstance_Implementation() const
 {
 	return GetMesh()->GetAnimInstance();
 }
+
+// UActorComponent* AParagonSquadPlayer::GetWeaponManagerComponent_Implementation() const
+// {
+// 	return EquipmentWeaponManager;
+// }
+
 
 TArray<UNinjaInputSetupDataAsset*> AParagonSquadPlayer::GetInputSetups_Implementation() const
 {

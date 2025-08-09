@@ -9,7 +9,9 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
-				"NinjaGAS"
+				"NinjaGAS",
+				"Engine",
+				"CommonUI"
 			]
 		}
 	],
@@ -60,6 +62,14 @@
 			"Name": "NinjaInventory",
 			"Enabled": true,
 			"MarketplaceURL": "com.epicgames.launcher://ue/Fab/product/da30946a-08c2-4133-9c92-46a5697d7214"
+		},
+		{
+			"Name": "CommonUI",
+			"Enabled": true
+		},
+		{
+			"Name": "GameplayMessageRouter",
+			"Enabled": true
 		}
 	]
 }

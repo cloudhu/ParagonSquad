@@ -30,7 +30,8 @@ public class ParagonSquad : ModuleRules
 	        "NinjaInventory",
 	        "NinjaInventoryCore",
 	        "NinjaInventoryEquipment",
-	        "UMG"
+	        "UMG",
+	        "CommonInput"
         ]);
     }
 }

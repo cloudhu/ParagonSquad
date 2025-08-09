@@ -12,6 +12,7 @@
 
 #include "ParagonSquadPlayer.generated.h"
 
+class UNinjaCombatEquipmentAdapterComponent;
 class UNinjaEquipmentManagerComponent;
 class USpringArmComponent;
 class UCameraComponent;
@@ -40,6 +41,7 @@ public:
 	virtual USceneComponent* GetCombatForwardReference_Implementation() const override;
 	virtual USkeletalMeshComponent* GetCombatMesh_Implementation() const override;
 	virtual UAnimInstance* GetCombatAnimInstance_Implementation() const override;
+	// virtual UActorComponent* GetWeaponManagerComponent_Implementation() const override;
 	// -- End CombatSystem implementation
 
 	// -- Begin Input Setup Provider implementation
@@ -74,4 +76,7 @@ private:
 	/** Equipment Manager component. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UNinjaEquipmentManagerComponent> EquipmentManager;
+
+	// UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	// TObjectPtr<UNinjaCombatEquipmentAdapterComponent> EquipmentWeaponManager;
 };

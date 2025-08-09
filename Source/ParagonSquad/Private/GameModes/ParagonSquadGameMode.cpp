@@ -1,14 +1,14 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "GameModes/ParagonSquadGameMode.h"
-#include "Player/ParagonSquadPlayerController.h"
+#include "Player/Controllers/GameplayPlayerController.h"
 #include "Player/ParagonSquadPlayer.h"
 #include "UObject/ConstructorHelpers.h"
 
 AParagonSquadGameMode::AParagonSquadGameMode()
 {
 	// use our custom PlayerController class
-	PlayerControllerClass = AParagonSquadPlayerController::StaticClass();
+	PlayerControllerClass = AGameplayPlayerController::StaticClass();
 
 	// set default pawn class to our Blueprinted character
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/TopDown/Blueprints/BP_TopDownCharacter"));
@@ -23,4 +23,5 @@ AParagonSquadGameMode::AParagonSquadGameMode()
 	{
 		PlayerControllerClass = PlayerControllerBPClass.Class;
 	}
+	
 }

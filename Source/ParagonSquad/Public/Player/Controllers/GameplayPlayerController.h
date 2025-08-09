@@ -4,17 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "ParagonSquadPlayerController.generated.h"
+#include "GameplayPlayerController.generated.h"
 
 class UNinjaInputManagerComponent;
 
 UCLASS()
-class AParagonSquadPlayerController : public APlayerController
+class AGameplayPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
 public:
-	AParagonSquadPlayerController(const FObjectInitializer& ObjectInitializer);
+	AGameplayPlayerController(const FObjectInitializer& ObjectInitializer);
 
 private:
 

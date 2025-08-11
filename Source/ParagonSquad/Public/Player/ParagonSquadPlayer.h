@@ -8,6 +8,7 @@
 
 #include "Interfaces/CombatSystemInterface.h"
 #include "Interfaces/EquipmentSystemInterface.h"
+#include "Interfaces/FactionMemberInterface.h"
 #include "Interfaces/InputSetupProviderInterface.h"
 
 #include "ParagonSquadPlayer.generated.h"
@@ -18,15 +19,15 @@ class USpringArmComponent;
 class UCameraComponent;
 class UNinjaCombatManagerComponent;
 class UNinjaInputSetupDataAsset;
-
+class UNinjaFactionComponent;
 
 UCLASS(Blueprintable)
-class AParagonSquadPlayer : public ANinjaGASPlayerCharacter, public ICombatSystemInterface, public IInputSetupProviderInterface, public IEquipmentSystemInterface
+class AParagonSquadPlayer : public ANinjaGASPlayerCharacter, public ICombatSystemInterface, public IInputSetupProviderInterface, public IEquipmentSystemInterface, public IFactionMemberInterface
 {
 	GENERATED_BODY()
 
 public:
-	AParagonSquadPlayer(const FObjectInitializer& ObjectInitializer);
+	AParagonSquadPlayer(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;
@@ -41,7 +42,7 @@ public:
 	virtual USceneComponent* GetCombatForwardReference_Implementation() const override;
 	virtual USkeletalMeshComponent* GetCombatMesh_Implementation() const override;
 	virtual UAnimInstance* GetCombatAnimInstance_Implementation() const override;
-	// virtual UActorComponent* GetWeaponManagerComponent_Implementation() const override;
+	virtual UActorComponent* GetWeaponManagerComponent_Implementation() const override;
 	// -- End CombatSystem implementation
 
 	// -- Begin Input Setup Provider implementation
@@ -51,6 +52,10 @@ public:
 	// -- Begin EquipmentSystem implementation
 	virtual UNinjaEquipmentManagerComponent* GetEquipmentManager_Implementation() const override;
 	// -- End EquipmentSystem implementation
+
+	// -- Begin Faction Member implementation
+	virtual UNinjaFactionComponent* GetFactionComponent_Implementation() const override;
+	// -- End Faction Member implementation
 protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input Setup")
@@ -77,6 +82,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UNinjaEquipmentManagerComponent> EquipmentManager;
 
-	// UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	// TObjectPtr<UNinjaCombatEquipmentAdapterComponent> EquipmentWeaponManager;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UNinjaCombatEquipmentAdapterComponent> EquipmentWeaponManager;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
+	TObjectPtr<UNinjaFactionComponent> FactionManager;
 };

@@ -3,18 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/PlayerController.h"
+
+#include "GameFramework/NinjaFactionPlayerController.h"
 #include "GameplayPlayerController.generated.h"
 
 class UNinjaInputManagerComponent;
 
 UCLASS()
-class AGameplayPlayerController : public APlayerController
+class AGameplayPlayerController : public ANinjaFactionPlayerController
 {
 	GENERATED_BODY()
 
 public:
-	AGameplayPlayerController(const FObjectInitializer& ObjectInitializer);
+	AGameplayPlayerController();
 
 private:
 

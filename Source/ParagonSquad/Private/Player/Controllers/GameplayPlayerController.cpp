@@ -3,7 +3,7 @@
 #include "Player/Controllers/GameplayPlayerController.h"
 #include "Components/NinjaInputManagerComponent.h"
 
-AGameplayPlayerController::AGameplayPlayerController(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer)
+AGameplayPlayerController::AGameplayPlayerController()
 {
 	static const FName InputManagerName = FName("InputManager");
 	InputManager = CreateDefaultSubobject<UNinjaInputManagerComponent>(InputManagerName);

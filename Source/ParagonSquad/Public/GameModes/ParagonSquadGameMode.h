@@ -3,11 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameModeBase.h"
+#include "GameFramework/NinjaCombatGameMode.h"
+
 #include "ParagonSquadGameMode.generated.h"
 
 UCLASS(minimalapi)
-class AParagonSquadGameMode : public AGameModeBase
+class AParagonSquadGameMode : public ANinjaCombatGameMode 
 {
 	GENERATED_BODY()
 

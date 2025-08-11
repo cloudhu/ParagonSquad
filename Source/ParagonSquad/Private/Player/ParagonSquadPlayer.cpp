@@ -11,11 +11,13 @@
 #include "Components/NinjaCombatCharacterMovementComponent.h"
 #include "Components/NinjaCombatManagerComponent.h"
 #include "Components/NinjaEquipmentManagerComponent.h"
+#include "Components/NinjaFactionComponent.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
-// #include "NinjaCombatInventory/Public/Components/NinjaCombatEquipmentAdapterComponent.h"
+#include "NinjaCombatInventory/Public/Components/NinjaCombatEquipmentAdapterComponent.h"
+
 
 AParagonSquadPlayer::AParagonSquadPlayer(const FObjectInitializer& ObjectInitializer): Super(
 	ObjectInitializer.SetDefaultSubobjectClass<UNinjaCombatCharacterMovementComponent>(CharacterMovementComponentName))
@@ -63,7 +65,10 @@ AParagonSquadPlayer::AParagonSquadPlayer(const FObjectInitializer& ObjectInitial
 
 	/** Equipment Manager component. */
 	EquipmentManager = CreateDefaultSubobject<UNinjaEquipmentManagerComponent>(TEXT("EquipmentManager"));
-	// EquipmentWeaponManager=CreateDefaultSubobject<UNinjaCombatEquipmentAdapterComponent>(TEXT("EquipmentWeaponManager"));
+	EquipmentWeaponManager = CreateDefaultSubobject<UNinjaCombatEquipmentAdapterComponent>(TEXT("EquipmentWeaponManager"));
+
+	static const FName FactionComponentName = TEXT("FactionManager");
+	FactionManager = CreateOptionalDefaultSubobject<UNinjaFactionComponent>(FactionComponentName);
 }
 
 void AParagonSquadPlayer::Tick(float DeltaSeconds)
@@ -91,10 +96,10 @@ UAnimInstance* AParagonSquadPlayer::GetCombatAnimInstance_Implementation() const
 	return GetMesh()->GetAnimInstance();
 }
 
-// UActorComponent* AParagonSquadPlayer::GetWeaponManagerComponent_Implementation() const
-// {
-// 	return EquipmentWeaponManager;
-// }
+UActorComponent* AParagonSquadPlayer::GetWeaponManagerComponent_Implementation() const
+{
+	return EquipmentWeaponManager;
+}
 
 
 TArray<UNinjaInputSetupDataAsset*> AParagonSquadPlayer::GetInputSetups_Implementation() const
@@ -105,4 +110,9 @@ TArray<UNinjaInputSetupDataAsset*> AParagonSquadPlayer::GetInputSetups_Implement
 UNinjaEquipmentManagerComponent* AParagonSquadPlayer::GetEquipmentManager_Implementation() const
 {
 	return EquipmentManager;
+}
+
+UNinjaFactionComponent* AParagonSquadPlayer::GetFactionComponent_Implementation() const
+{
+	return FactionManager;
 }

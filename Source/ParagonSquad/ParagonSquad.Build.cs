@@ -25,13 +25,16 @@ public class ParagonSquad : ModuleRules
 	        "NinjaCombatCore",
 	        "NinjaCombatActorPool",
 	        "NinjaCombatUI",
+	        "NinjaCombatInventory",
 	        "StructUtils",
+	        "NinjaCombatFactions",
 	        // Ninja Inventory
 	        "NinjaInventory",
 	        "NinjaInventoryCore",
 	        "NinjaInventoryEquipment",
 	        "UMG",
-	        "CommonInput"
+	        "CommonInput",
+	        "NinjaFactions",
         ]);
     }
 }
